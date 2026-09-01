@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sanskar Verma — Portfolio</title>
+<meta name="description" content="Sanskar Verma — Computer Science (AI) graduate. Data warehousing, ETL, and AI systems engineer.">
+<style>
+  :root{
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+    --accent:#5b7cfa;
+    --glass: rgba(255,255,255,.72);
+    --glass-dark: rgba(30,32,40,.55);
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%; margin:0; overflow:hidden; font-family:var(--ui); color:#1a1a1a;}
+  button{font-family:var(--ui); cursor:pointer; border:none; background:none;}
+  a{color:var(--accent); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* ===== DESKTOP / WALLPAPER ===== */
+  .desktop{
+    position:fixed; inset:0; top:30px; bottom:0; overflow:hidden;
+    background:
+      radial-gradient(1200px 800px at 78% 15%, rgba(255,255,255,.10), transparent 55%),
+      linear-gradient(128deg, #0a0f3d 0%, #1f2f9e 28%, #4a4fd6 50%, #6f6ef0 66%, #9f8ff5 82%, #cfc4fa 100%);
+  }
+  .desktop::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(700px 500px at 15% 85%, rgba(10,15,60,.55), transparent 60%),
+      radial-gradient(900px 600px at 95% 90%, rgba(20,15,90,.35), transparent 55%);
+  }
+  .hero{
+    position:absolute; left:50%; top:38%; transform:translate(-50%,-50%);
+    text-align:center; color:#fff; pointer-events:none; width:90%; max-width:620px;
+  }
+  .hero .lead{font-size:clamp(15px,2vw,19px); font-weight:500; opacity:.92; text-shadow:0 1px 6px rgba(0,0,0,.35);}
+  .hero .big{
+    font-family:'Comic Sans MS', 'Segoe Print', var(--ui); font-weight:700;
+    font-size:clamp(48px,9vw,88px); line-height:1; margin-top:6px; letter-spacing:.01em;
+    text-shadow:0 3px 18px rgba(0,0,0,.35); transform:rotate(-1.5deg);
+  }
+
+  /* ===== MENU BAR ===== */
+  .menubar{
+    position:fixed; top:0; left:0; right:0; height:30px; z-index:600;
+    background:var(--glass-dark); backdrop-filter:blur(16px);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 14px; color:#f2f2f2; font-size:12.5px;
+  }
+  .mb-left{display:flex; align-items:center; gap:18px;}
+  .mb-logo{
+    width:16px; height:16px; border-radius:50%; background:var(--accent);
+    display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff;
+  }
+  .mb-name{font-weight:600;}
+  .mb-links{display:flex; gap:16px;}
+  .mb-links button{color:#e8e8e8; font-size:12.5px; opacity:.85;}
+  .mb-links button:hover{opacity:1;}
+  .mb-right{display:flex; align-items:center; gap:14px; font-size:12px; opacity:.9;}
+
+  /* ===== DESKTOP ICONS ===== */
+  .icons{position:absolute; top:22px; left:20px; display:grid; grid-auto-flow:column; grid-template-rows:repeat(4,92px); gap:4px 8px;}
+  .dicon{
+    width:84px; height:88px; display:flex; flex-direction:column; align-items:center; gap:6px;
+    padding:6px; border-radius:8px; color:#fff;
+  }
+  .dicon:hover, .dicon:focus-visible{background:rgba(255,255,255,.14);}
+  .dicon svg{width:42px; height:42px;}
+  .dicon span{font-size:11.5px; text-align:center; text-shadow:0 1px 3px rgba(0,0,0,.6); line-height:1.25;}
+
+  /* ===== DOCK ===== */
+  .dock-wrap{position:fixed; left:0; right:0; bottom:10px; z-index:700; display:flex; justify-content:center; pointer-events:none;}
+  .dock{
+    pointer-events:auto; display:flex; align-items:flex-end; gap:10px;
+    background:var(--glass-dark); backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.12); border-radius:20px; padding:8px 10px;
+  }
+  .dock-item{position:relative; display:flex; flex-direction:column; align-items:center;}
+  .dock-btn{
+    width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+    transition:transform .15s ease; background:rgba(255,255,255,.08);
+  }
+  .dock-btn:hover{transform:translateY(-6px) scale(1.08);}
+  .dock-btn svg{width:26px; height:26px;}
+  .dock-tip{
+    position:absolute; bottom:56px; background:#222; color:#fff; font-size:11px; padding:3px 8px;
+    border-radius:5px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .15s;
+  }
+  .dock-item:hover .dock-tip{opacity:1;}
+  .dock-sep{width:1px; align-self:stretch; background:rgba(255,255,255,.18); margin:4px 2px;}
+  .askme{
+    position:relative; display:flex; align-items:center; gap:6px; padding:0 14px; height:46px; border-radius:23px;
+    background:linear-gradient(135deg, var(--accent), #8b6ef7); color:#fff; font-size:13px; font-weight:600;
+    transition:transform .15s ease;
+  }
+  .askme:hover{transform:translateY(-6px) scale(1.05);}
+  .askme .badge{
+    position:absolute; top:-4px; right:6px; background:#ff5f57; color:#fff; font-size:9px; font-weight:700;
+    width:15px; height:15px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ===== WINDOWS ===== */
+  #windows-layer{position:absolute; inset:0; z-index:100; pointer-events:none;}
+  .win{
+    position:absolute; display:flex; flex-direction:column; min-width:280px; min-height:200px;
+    background:#fbfbfd; border-radius:12px; overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,.35), 0 0 0 1px rgba(0,0,0,.06);
+    pointer-events:auto;
+  }
+  .win.maximized{ left:2% !important; top:2% !important; width:96% !important; height:94% !important; }
+  .titlebar{
+    height:38px; flex:0 0 auto; display:flex; align-items:center; padding:0 12px;
+    background:linear-gradient(180deg, #f6f6f8, #ececef); border-bottom:1px solid #e0e0e3;
+    touch-action:none; user-select:none; position:relative;
+  }
+  .tl{display:flex; gap:8px;}
+  .tl button{width:12px; height:12px; border-radius:50%; padding:0;}
+  .tl .r{background:#ff5f57;} .tl .y{background:#febc2e;} .tl .g{background:#28c840;}
+  .titlebar .ttl{
+    position:absolute; left:50%; transform:translateX(-50%); font-size:12.5px; font-weight:600; color:#444;
+  }
+  .win-body{flex:1; overflow:auto; background:#fff;}
+  .content{padding:22px 26px; line-height:1.6; color:#1c1c1e;}
+  .content h2{font-size:19px; margin-bottom:4px;}
+  .content .role{font-size:12px; color:var(--accent); font-weight:600; margin-bottom:12px; text-transform:uppercase; letter-spacing:.03em;}
+  .kv{display:grid; grid-template-columns:110px 1fr; gap:8px 10px; margin:12px 0; font-size:13px;}
+  .kv b{font-weight:600; color:#555;}
+  .stack{display:flex; flex-wrap:wrap; gap:6px; margin:12px 0;}
+  .stack span{font-family:var(--mono); font-size:11px; padding:3px 9px; background:#f0f1f6; border-radius:6px; color:#333;}
+  .content ul{margin:12px 0 4px 20px;}
+  .content li{margin-bottom:9px; font-size:13.5px;}
+  .badges{display:flex; flex-wrap:wrap; gap:6px; margin:12px 0;}
+  .badges span{font-size:11px; padding:4px 9px; background:#fff3d6; border-radius:6px; color:#7a5b00;}
+  .doi{font-family:var(--mono); font-size:11.5px; color:#777; margin-top:10px; display:block;}
+  table.inv{border-collapse:collapse; width:100%; font-size:13px;}
+  table.inv td, table.inv th{border-bottom:1px solid #eee; padding:9px 4px; text-align:left;}
+  table.inv th{color:#888; font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.03em;}
+  .hint{font-size:12px; color:#888; margin-top:16px; padding-top:14px; border-top:1px solid #eee;}
+
+  .pgrid{display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:20px 24px;}
+  .pcard{border:1px solid #ececef; border-radius:10px; padding:16px;}
+  .pcard h3{font-size:14.5px; margin-bottom:6px;}
+  .pcard p{font-size:12.5px; color:#555; margin-bottom:8px;}
+  @media (max-width:600px){.pgrid{grid-template-columns:1fr;}}
+
+  /* ===== CHAT WINDOW ===== */
+  .chat-log{display:flex; flex-direction:column; gap:10px; padding:16px; min-height:100%;}
+  .bubble{max-width:80%; padding:9px 13px; border-radius:14px; font-size:13.5px; line-height:1.5;}
+  .bubble.bot{background:#eef0f6; color:#1c1c1e; align-self:flex-start; border-bottom-left-radius:4px;}
+  .bubble.user{background:var(--accent); color:#fff; align-self:flex-end; border-bottom-right-radius:4px;}
+  .typing{display:flex; gap:4px; align-self:flex-start; padding:10px 14px; background:#eef0f6; border-radius:14px; border-bottom-left-radius:4px;}
+  .typing span{width:6px; height:6px; border-radius:50%; background:#999; animation:blink 1.2s infinite ease-in-out;}
+  .typing span:nth-child(2){animation-delay:.2s;} .typing span:nth-child(3){animation-delay:.4s;}
+  @keyframes blink{0%,80%,100%{opacity:.3;} 40%{opacity:1;}}
+  .chat-body{display:flex; flex-direction:column; height:100%;}
+  .chat-scroll{flex:1; overflow:auto;}
+  .chat-input-row{display:flex; gap:8px; padding:10px; border-top:1px solid #eee; background:#fafafa;}
+  .chat-input-row input{
+    flex:1; border:1px solid #ddd; border-radius:18px; padding:9px 14px; font-size:13.5px; font-family:var(--ui);
+    outline:none;
+  }
+  .chat-input-row input:focus{border-color:var(--accent);}
+  .chat-input-row button{
+    background:var(--accent); color:#fff; width:36px; height:36px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+  }
+
+  :focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+
+  @media (max-width:720px){
+    .icons{grid-template-rows:repeat(6,84px); left:10px;}
+    .win{left:3% !important; top:6% !important; width:94% !important; height:82% !important;}
+    .mb-links{display:none;}
+    .pgrid{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .dock-btn, .askme{transition:none;}
+    .typing span{animation:none; opacity:.6;}
+  }
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <symbol id="i-folder" viewBox="0 0 32 32">
+      <path d="M3 9c0-1.1.9-2 2-2h7l2.5 2.5H27a2 2 0 0 1 2 2V23a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="#5ec8e8"/>
+      <path d="M3 9c0-1.1.9-2 2-2h7l2.5 2.5H5a2 2 0 0 0-2 2z" fill="#8adcf5"/>
+    </symbol>
+    <symbol id="i-pdf" viewBox="0 0 32 32">
+      <path d="M7 2h13l6 6v22H7z" fill="#fff" stroke="#ccc"/>
+      <path d="M20 2v6h6" fill="none" stroke="#ccc"/>
+      <rect x="6" y="19" width="18" height="7" rx="1.5" fill="#e0453a"/>
+      <text x="15" y="24.3" font-size="6" fill="#fff" text-anchor="middle" font-family="Arial" font-weight="bold">PDF</text>
+    </symbol>
+    <symbol id="i-doc" viewBox="0 0 32 32">
+      <path d="M7 2h13l6 6v22H7z" fill="#fff" stroke="#ccc"/>
+      <path d="M20 2v6h6" fill="none" stroke="#ccc"/>
+      <path d="M11 15h10M11 19h10M11 23h7" stroke="#5b7cfa" stroke-width="1.4"/>
+    </symbol>
+    <symbol id="i-person" viewBox="0 0 32 32">
+      <circle cx="16" cy="11" r="6" fill="#5b7cfa"/>
+      <path d="M4 28c1-6.5 6.5-10 12-10s11 3.5 12 10z" fill="#8b6ef7"/>
+    </symbol>
+    <symbol id="i-gear" viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="7" fill="none" stroke="#5b7cfa" stroke-width="2.6"/>
+      <circle cx="16" cy="16" r="2.6" fill="#5b7cfa"/>
+      <g stroke="#5b7cfa" stroke-width="2.6" stroke-linecap="round">
+        <path d="M16 3v4M16 25v4M3 16h4M25 16h4M6.5 6.5l2.8 2.8M22.7 22.7l2.8 2.8M25.5 6.5l-2.8 2.8M9.3 22.7l-2.8 2.8"/>
+      </g>
+    </symbol>
+    <symbol id="i-medal" viewBox="0 0 32 32">
+      <path d="M11 4h10l-3 10h-4z" fill="#febc2e"/>
+      <circle cx="16" cy="20" r="8" fill="#5b7cfa"/>
+      <circle cx="16" cy="20" r="5" fill="none" stroke="#fff" stroke-width="1.4"/>
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 32 32">
+      <rect x="3" y="7" width="26" height="18" rx="3" fill="#fff" stroke="#5b7cfa" stroke-width="1.6"/>
+      <path d="M4 9l12 9 12-9" fill="none" stroke="#5b7cfa" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-spark" viewBox="0 0 32 32">
+      <path d="M16 3l2.6 8.4L27 14l-8.4 2.6L16 25l-2.6-8.4L5 14l8.4-2.6z" fill="#fff"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="menubar">
+  <div class="mb-left">
+    <span class="mb-logo">S</span>
+    <span class="mb-name">Sanskar's Portfolio</span>
+    <nav class="mb-links">
+      <button id="mb-projects">Projects</button>
+      <button id="mb-contact">Contact</button>
+      <button id="mb-resume">Resume</button>
+    </nav>
+  </div>
+  <div class="mb-right">
+    <span id="mb-clock">--:--</span>
+  </div>
+</header>
+
+<div class="desktop" id="desktop">
+  <div class="hero">
+    <div class="lead">Hey, I'm Sanskar! welcome to my</div>
+    <div class="big">PORTFOLIO</div>
+  </div>
+  <div class="icons" id="icon-grid"></div>
+  <div id="windows-layer"></div>
+</div>
+
+<div class="dock-wrap">
+  <div class="dock" id="dock"></div>
+</div>
+
+<script>
+(function(){
+  var WINDOWS = {
+    about: {
+      title: "About Me", icon: "i-person", x: 110, y: 30, w: 460, h: 380,
+      html: '<div class="content">'
+        + '<h2>Sanskar Verma</h2>'
+        + '<div class="role">Computer Science (AI) &middot; PSIT Kanpur, 2021&ndash;2025</div>'
+        + '<p>Computer Science (AI) graduate with a strong foundation in data engineering, machine learning, and backend development. Built end-to-end systems spanning AI-powered technical interviewing, data warehousing, NLP, and REST APIs using Python, Java, SQL, Spring Boot, and Docker. Published as first author in CRC Press (Taylor &amp; Francis) and served as Vice President of the Aryabhatta Club.</p>'
+        + '<div class="kv">'
+        + '<b>Location</b><span>Varanasi, India</span>'
+        + '<b>Education</b><span>B.Tech CSE (AI), PSIT Kanpur, AKTU &mdash; 2021&ndash;2025</span>'
+        + '<b>Email</b><span><a href="mailto:vermasanskar432@gmail.com">vermasanskar432@gmail.com</a></span>'
+        + '<b>Phone</b><span><a href="tel:+916392874047">+91 63928 74047</a></span>'
+        + '<b>LinkedIn</b><span><a href="https://linkedin.com/in/sanskarv-dev" target="_blank" rel="noopener">linkedin.com/in/sanskarv-dev</a></span>'
+        + '<b>GitHub</b><span><a href="https://github.com/sanskarv" target="_blank" rel="noopener">github.com/sanskarv</a></span>'
+        + '</div>'
+        + '<p class="hint">Try the Ask Me chat in the dock — it answers questions about this resume only.</p>'
+        + '</div>'
+    },
+    projects: {
+      title: "Projects", icon: "i-folder", x: 140, y: 60, w: 620, h: 440,
+      html: '<div class="pgrid">'
+        + '<div class="pcard"><h3>Data Warehouse &amp; Analytics Platform</h3><p>Medallion Architecture warehouse (Bronze / Silver / Gold) with ETL pipelines and a Star Schema for analytics.</p><div class="stack"><span>SQL Server</span><span>ETL</span><span>Star Schema</span></div></div>'
+        + '<div class="pcard"><h3>AI Interviewer</h3><p>Reads GitHub repos to generate personalised interview questions, runs a voice interview, and scores responses with Gemini.</p><div class="stack"><span>React</span><span>Gemini</span><span>Deepgram</span></div></div>'
+        + '</div>'
+        + '<div class="content" style="padding-top:0;"><p class="hint">Open the individual folders on the desktop for full write-ups, or ask the chat.</p></div>'
+    },
+    warehouse: {
+      title: "Data Warehouse", icon: "i-folder", x: 170, y: 90, w: 480, h: 420,
+      html: '<div class="content">'
+        + '<h2>Data Warehouse &amp; Analytics Platform</h2>'
+        + '<div class="stack"><span>SQL Server</span><span>ETL Pipelines</span><span>Medallion Architecture</span><span>Star Schema</span><span>Data Modelling</span><span>Notion</span></div>'
+        + '<ul>'
+        + '<li>Designed a Medallion Architecture warehouse &mdash; Bronze for raw ERP/CRM data, Silver for cleansing, Gold for business-ready analytics.</li>'
+        + '<li>Built ETL pipelines moving data through all three layers, resolving data-quality issues and merging two source systems into one unified model.</li>'
+        + '<li>Built a Star Schema in the Gold layer with fact and dimension tables tuned for analytical queries, used to report on customer behaviour, product performance, and sales trends.</li>'
+        + '<li>Documented the full architecture in Notion &mdash; data-flow diagrams, data models, naming conventions, and a data catalog for extensibility.</li>'
+        + '</ul></div>'
+    },
+    interviewer: {
+      title: "AI Interviewer", icon: "i-folder", x: 210, y: 120, w: 480, h: 420,
+      html: '<div class="content">'
+        + '<h2>AI Interviewer</h2>'
+        + '<div class="role">Personalized AI Technical Interview Platform</div>'
+        + '<div class="stack"><span>React</span><span>Bun</span><span>PostgreSQL</span><span>Prisma</span><span>Gemini API</span><span>Deepgram</span><span>GitHub API</span></div>'
+        + '<ul>'
+        + '<li>Built a platform that reads a candidate&rsquo;s GitHub repositories and generates interview questions specific to their own projects, using Gemini.</li>'
+        + '<li>Built a real-time voice interview pipeline with Deepgram speech-to-text and browser audio, persisting questions and responses through PostgreSQL and Prisma.</li>'
+        + '<li>Implemented REST APIs with Express.js on Bun for interview orchestration, GitHub metadata processing, transcript storage, question generation, and feedback.</li>'
+        + '<li>Implemented Gemini-based evaluation that scores candidate responses and generates detailed feedback, with quota and error handling.</li>'
+        + '</ul></div>'
+    },
+    resume: {
+      title: "Resume.pdf", icon: "i-pdf", x: 150, y: 50, w: 500, h: 440,
+      html: '<div class="content">'
+        + '<h2>IoT-Integrated Cloud and Data Solutions</h2>'
+        + '<div class="role">CRC Press &middot; Taylor &amp; Francis &mdash; Book Chapter</div>'
+        + '<div class="badges"><span>First Author</span><span>Peer-Reviewed</span><span>89% Originality</span><span>4 International Editors</span></div>'
+        + '<p>Written and accepted at 21, during the third year of college. Co-authored with researchers from PSIT Kanpur and Amity University Lucknow, covering IoT-cloud integration, edge computing, data warehousing, data lakes, and reactive ML models.</p>'
+        + '<span class="doi">DOI: 10.1201/9781003392224</span>'
+        + '<p class="hint">For the full resume PDF, email vermasanskar432@gmail.com.</p>'
+        + '</div>'
+    },
+    skills: {
+      title: "Skills", icon: "i-gear", x: 190, y: 80, w: 480, h: 420,
+      html: '<div class="content">'
+        + '<h2>Technical Skills</h2>'
+        + '<table class="inv"><tr><th>Category</th><th>Contents</th></tr>'
+        + '<tr><td>Languages</td><td>Python, SQL, Node.js, Java, HTML, CSS</td></tr>'
+        + '<tr><td>AI / ML</td><td>NLP, Machine Learning, Sentiment Analysis, Scikit-learn, LLM, RAG (basics)</td></tr>'
+        + '<tr><td>Data Engineering</td><td>ETL Pipelines, SQL Server, Star Schema, Medallion Architecture, Data Modelling</td></tr>'
+        + '<tr><td>Backend &amp; APIs</td><td>Spring Boot, REST APIs, FastAPI (basics), MySQL</td></tr>'
+        + '<tr><td>Tools &amp; DevOps</td><td>Docker, Git, GitHub, Postman, VS Code</td></tr>'
+        + '<tr><td>Soft Skills</td><td>Team Leadership, Event Management, Stakeholder Communication</td></tr>'
+        + '</table></div>'
+    },
+    credentials: {
+      title: "Credentials", icon: "i-medal", x: 230, y: 100, w: 480, h: 420,
+      html: '<div class="content">'
+        + '<h2>Leadership &amp; Certifications</h2>'
+        + '<div class="role">Vice President &mdash; Aryabhatta Club, PSIT Kanpur (2021&ndash;2025)</div>'
+        + '<p>Led the club&rsquo;s technical events and college-fest activities for audiences of hundreds of students. Coordinated logistics, speaker sessions, and cross-functional teams with faculty and students.</p>'
+        + '<table class="inv" style="margin-top:14px;"><tr><th>Certification</th><th>Provider</th></tr>'
+        + '<tr><td>REST API Development</td><td>Udemy</td></tr>'
+        + '<tr><td>Python Programming</td><td>Springboard</td></tr>'
+        + '<tr><td>JavaScript</td><td>Springboard</td></tr>'
+        + '<tr><td>5-Star Python Coder</td><td>HackerRank</td></tr>'
+        + '</table></div>'
+    },
+    contact: {
+      title: "Contact", icon: "i-mail", x: 260, y: 130, w: 420, h: 300,
+      html: '<div class="content">'
+        + '<h2>Get in touch</h2>'
+        + '<div class="kv">'
+        + '<b>Email</b><span><a href="mailto:vermasanskar432@gmail.com">vermasanskar432@gmail.com</a></span>'
+        + '<b>Phone</b><span><a href="tel:+916392874047">+91 63928 74047</a></span>'
+        + '<b>LinkedIn</b><span><a href="https://linkedin.com/in/sanskarv-dev" target="_blank" rel="noopener">linkedin.com/in/sanskarv-dev</a></span>'
+        + '<b>GitHub</b><span><a href="https://github.com/sanskarv" target="_blank" rel="noopener">github.com/sanskarv</a></span>'
+        + '</div>'
+        + '<p class="hint">Open to Data Engineering, AI/ML, and SDE roles.</p>'
+        + '</div>'
+    },
+    chat: {
+      title: "Ask Me", icon: "i-spark", x: 200, y: 40, w: 380, h: 460, isChat: true,
+      html: '<div class="chat-body">'
+        + '<div class="chat-scroll" id="chat-scroll"><div class="chat-log" id="chat-log"></div></div>'
+        + '<div class="chat-input-row"><input id="chat-input" type="text" placeholder="Ask about Sanskar\'s resume..." autocomplete="off">'
+        + '<button id="chat-send" aria-label="Send">&#8593;</button></div>'
+        + '</div>'
+    }
+  };
+
+  /* ---- resume-only knowledge base ---- */
+  var KB = [
+    { k:["who are you","who is sanskar","about sanskar","tell me about him","introduce"], a:"Sanskar Verma is a Computer Science (AI) graduate from PSIT Kanpur, working in data engineering, machine learning, and backend development." },
+    { k:["education","degree","college","university","btech","b.tech","cgpa","gpa","school"], a:"He holds a B.Tech in Computer Science & Engineering (AI specialization) from Pranveer Singh Institute of Technology, Kanpur (AKTU), 2021–2025." },
+    { k:["where is he","location","based","live","city","varanasi"], a:"Sanskar is based in Varanasi, India." },
+    { k:["skills","technologies","tech stack","stack","programming language","languages he knows"], a:"Languages: Python, SQL, Node.js, Java, HTML, CSS. Plus AI/ML, data engineering, backend, and DevOps tooling — ask about any of those specifically." },
+    { k:["ai","machine learning","nlp","llm","rag","scikit","sentiment"], a:"AI/ML skills: NLP, Machine Learning, Sentiment Analysis, Scikit-learn, LLM basics, and RAG basics." },
+    { k:["data engineering","etl","sql server","star schema","medallion","warehouse","data modelling","data model"], a:"Data engineering: ETL Pipelines, SQL Server, Star Schema, Medallion Architecture, Data Modelling — showcased in his Data Warehouse & Analytics Platform project (Bronze/Silver/Gold layers, ETL pipelines, a Gold-layer Star Schema, all documented in Notion)." },
+    { k:["backend","spring boot","rest api","fastapi","mysql","api"], a:"Backend & APIs: Spring Boot, REST APIs, FastAPI (basics), MySQL." },
+    { k:["docker","git","github","postman","vscode","devops","tools"], a:"Tools & DevOps: Docker, Git, GitHub, Postman, VS Code." },
+    { k:["ai interviewer","interview platform","gemini","deepgram","mock interview","technical interview","voice interview"], a:"AI Interviewer is a personalized technical interview platform: it reads a candidate's GitHub repos to generate project-specific questions with Gemini, runs a real-time voice interview via Deepgram, and scores responses with detailed feedback. Built with React, Bun, PostgreSQL, Prisma, Gemini API, Deepgram, and the GitHub API." },
+    { k:["data warehouse project","warehouse project","etl pipeline","medallion architecture","star schema project"], a:"The Data Warehouse & Analytics Platform uses Medallion Architecture (Bronze/Silver/Gold layers), ETL pipelines merging two source systems, and a Gold-layer Star Schema for reporting on customer behaviour, product performance, and sales trends — built with SQL Server and documented in Notion." },
+    { k:["projects","what has he built","what did he build","portfolio projects","built"], a:"Two anchor projects: a Data Warehouse & Analytics Platform (SQL Server, ETL, Medallion Architecture) and AI Interviewer (a personalized AI technical interview platform using Gemini and Deepgram)." },
+    { k:["publication","book chapter","crc press","research paper","research","paper","doi","author","published","journal"], a:"He's first author of a peer-reviewed book chapter, 'IoT-Integrated Cloud and Data Solutions,' published by CRC Press (Taylor & Francis), DOI 10.1201/9781003392224, with an 89% originality score across four international editors. Co-authored with researchers from PSIT Kanpur and Amity University Lucknow." },
+    { k:["leadership","vice president","aryabhatta","club","extracurricular"], a:"He was Vice President of the Aryabhatta Club at PSIT Kanpur (2021–2025), leading technical events and college-fest activities for audiences of hundreds of students." },
+    { k:["certification","certificate","udemy","springboard","hackerrank","5-star","5 star"], a:"Certifications: REST API Development (Udemy), Python Programming (Springboard), JavaScript (Springboard), and 5-Star Python Coder on HackerRank." },
+    { k:["contact","email","phone","reach him","hire him","connect","linkedin","github link"], a:"Email: vermasanskar432@gmail.com · Phone: +91 63928 74047 · LinkedIn: linkedin.com/in/sanskarv-dev · GitHub: github.com/sanskarv" },
+    { k:["looking for","job","role he wants","hiring","open to","target role","career goal"], a:"He's looking for AI/ML Engineer, Data Engineer, and Software Development Engineer roles." },
+    { k:["resume","cv","download resume","full resume"], a:"You're looking at the highlights right here — for the full resume PDF, email vermasanskar432@gmail.com." },
+    { k:["what can you","what do you know","help me","capabilities"], a:"I can answer questions about Sanskar's education, skills, projects, publication, leadership, certifications, and how to contact him — ask away!" },
+    { k:["hi","hello","hey there","hey"], a:"Hi! I'm Sanskar's resume assistant. Ask me about his education, skills, projects, publication, or how to reach him." },
+    { k:["thanks","thank you","thx"], a:"You're welcome! Anything else about Sanskar's resume?" }
+  ];
+  var FALLBACK = "I can only answer questions about Sanskar's resume — try asking about his skills, projects, education, publication, or how to contact him.";
+
+  function kbAnswer(q){
+    var norm = q.toLowerCase();
+    var best=null, bestScore=0;
+    KB.forEach(function(e){
+      var score=0;
+      e.k.forEach(function(k){ if(norm.indexOf(k)!==-1) score += k.length; });
+      if(score>bestScore){ bestScore=score; best=e; }
+    });
+    return (best && bestScore>0) ? best.a : FALLBACK;
+  }
+
+  var zTop = 10;
+  var iconGrid = document.getElementById('icon-grid');
+  var deskIconOrder = ['warehouse','interviewer','resume','credentials'];
+  var deskLabels = { warehouse:'Data Warehouse', interviewer:'AI Interviewer', resume:'Resume.pdf', credentials:'Credentials' };
+  deskIconOrder.forEach(function(id){
+    var m = WINDOWS[id];
+    var btn = document.createElement('button');
+    btn.className = 'dicon';
+    btn.innerHTML = '<svg><use href="#'+m.icon+'"/></svg><span>'+deskLabels[id]+'</span>';
+    btn.addEventListener('click', function(){ openWindow(id); });
+    iconGrid.appendChild(btn);
+  });
+
+  var dock = document.getElementById('dock');
+  var dockOrder = [
+    {id:'about', icon:'i-person', label:'About'},
+    {id:'projects', icon:'i-folder', label:'Projects'},
+    {id:'resume', icon:'i-pdf', label:'Publication'},
+    {id:'skills', icon:'i-gear', label:'Skills'},
+    {id:'credentials', icon:'i-medal', label:'Credentials'},
+    {id:'contact', icon:'i-mail', label:'Contact'}
+  ];
+  dockOrder.forEach(function(d){
+    var item = document.createElement('div');
+    item.className = 'dock-item';
+    item.innerHTML = '<div class="dock-tip">'+d.label+'</div><button class="dock-btn"><svg><use href="#'+d.icon+'"/></svg></button>';
+    item.querySelector('button').addEventListener('click', function(){ openWindow(d.id); });
+    dock.appendChild(item);
+  });
+  var sep = document.createElement('div'); sep.className='dock-sep'; dock.appendChild(sep);
+  var askItem = document.createElement('div');
+  askItem.className = 'dock-item';
+  askItem.style.position='relative';
+  askItem.innerHTML = '<button class="askme"><svg style="width:16px;height:16px;"><use href="#i-spark"/></svg>Ask Me<span class="badge" id="ask-badge">1</span></button>';
+  askItem.querySelector('button').addEventListener('click', function(){
+    var badge = document.getElementById('ask-badge');
+    if(badge) badge.remove();
+    openWindow('chat');
+  });
+  dock.appendChild(askItem);
+
+  document.getElementById('mb-projects').addEventListener('click', function(){ openWindow('projects'); });
+  document.getElementById('mb-contact').addEventListener('click', function(){ openWindow('contact'); });
+  document.getElementById('mb-resume').addEventListener('click', function(){ openWindow('resume'); });
+
+  function openWindow(id){
+    var m = WINDOWS[id];
+    var el = document.getElementById('win-'+id);
+    if(!el){
+      el = document.createElement('div');
+      el.className = 'win';
+      el.id = 'win-'+id;
+      var narrow = window.innerWidth < 720;
+      el.style.width = narrow ? '' : m.w+'px';
+      el.style.height = narrow ? '' : m.h+'px';
+      el.style.left = narrow ? '' : m.x+'px';
+      el.style.top = narrow ? '' : m.y+'px';
+      el.innerHTML =
+        '<div class="titlebar">'
+        + '<div class="tl"><button class="r" data-act="close" aria-label="Close"></button><button class="y" data-act="min" aria-label="Minimize"></button><button class="g" data-act="max" aria-label="Zoom"></button></div>'
+        + '<div class="ttl">'+m.title+'</div>'
+        + '</div>'
+        + '<div class="win-body">'+m.html+'</div>';
+      document.getElementById('windows-layer').appendChild(el);
+      makeDraggable(el);
+      el.querySelector('[data-act="close"]').addEventListener('click', function(){ el.remove(); });
+      el.querySelector('[data-act="min"]').addEventListener('click', function(){ el.style.display='none'; });
+      el.querySelector('[data-act="max"]').addEventListener('click', function(){ el.classList.toggle('maximized'); });
+      el.addEventListener('mousedown', function(){ bringToFront(el); });
+      el.addEventListener('touchstart', function(){ bringToFront(el); }, {passive:true});
+      if(m.isChat) initChat(el);
+    }
+    el.style.display = 'flex';
+    bringToFront(el);
+  }
+
+  function bringToFront(el){ zTop += 1; el.style.zIndex = zTop; }
+
+  function makeDraggable(el){
+    var titlebar = el.querySelector('.titlebar');
+    var offX=0, offY=0, dragging=false;
+    titlebar.addEventListener('pointerdown', function(e){
+      if(e.target.closest('.tl')) return;
+      if(el.classList.contains('maximized')) return;
+      dragging = true;
+      var rect = el.getBoundingClientRect();
+      offX = e.clientX - rect.left; offY = e.clientY - rect.top;
+      titlebar.setPointerCapture(e.pointerId);
+    });
+    titlebar.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      var deskRect = document.getElementById('desktop').getBoundingClientRect();
+      var nx = e.clientX - offX - deskRect.left;
+      var ny = e.clientY - offY - deskRect.top;
+      nx = Math.max(-el.offsetWidth+80, Math.min(nx, deskRect.width-40));
+      ny = Math.max(0, Math.min(ny, deskRect.height-30));
+      el.style.left = nx+'px'; el.style.top = ny+'px';
+    });
+    titlebar.addEventListener('pointerup', function(e){ dragging=false; try{titlebar.releasePointerCapture(e.pointerId);}catch(err){} });
+    titlebar.addEventListener('pointercancel', function(){ dragging=false; });
+  }
+
+  function initChat(winEl){
+    var log = winEl.querySelector('#chat-log');
+    var scroll = winEl.querySelector('#chat-scroll');
+    var input = winEl.querySelector('#chat-input');
+    var send = winEl.querySelector('#chat-send');
+
+    addBubble(log, "Hi! I'm Sanskar's resume assistant. Ask me about his education, skills, projects, publication, or how to reach him — I only know about his resume.", 'bot');
+    scroll.scrollTop = scroll.scrollHeight;
+
+    function handleSend(){
+      var q = input.value.trim();
+      if(!q) return;
+      addBubble(log, q, 'user');
+      input.value = '';
+      scroll.scrollTop = scroll.scrollHeight;
+      var typing = document.createElement('div');
+      typing.className = 'typing';
+      typing.innerHTML = '<span></span><span></span><span></span>';
+      log.appendChild(typing);
+      scroll.scrollTop = scroll.scrollHeight;
+      setTimeout(function(){
+        typing.remove();
+        addBubble(log, kbAnswer(q), 'bot');
+        scroll.scrollTop = scroll.scrollHeight;
+      }, 450);
+    }
+    send.addEventListener('click', handleSend);
+    input.addEventListener('keydown', function(e){ if(e.key==='Enter') handleSend(); });
+  }
+  function addBubble(log, text, who){
+    var b = document.createElement('div');
+    b.className = 'bubble '+who;
+    b.textContent = text;
+    log.appendChild(b);
+  }
+
+  function tick(){
+    var d = new Date();
+    var days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var h=d.getHours(), m=d.getMinutes();
+    var ampm = h>=12?'PM':'AM'; h=h%12; if(h===0) h=12;
+    document.getElementById('mb-clock').textContent =
+      days[d.getDay()]+' '+months[d.getMonth()]+' '+d.getDate()+'  '+h+':'+(m<10?'0':'')+m+' '+ampm;
+  }
+  tick(); setInterval(tick, 15000);
+
+  openWindow('about');
+})();
+</script>
+
+</body>
+</html>
