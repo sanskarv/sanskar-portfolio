@@ -62,14 +62,14 @@
   .mb-right{display:flex; align-items:center; gap:14px; font-size:12px; opacity:.9;}
 
   /* ===== DESKTOP ICONS ===== */
-  .icons{position:absolute; top:22px; left:20px; display:grid; grid-auto-flow:column; grid-template-rows:repeat(4,92px); gap:4px 8px;}
+  .icons{position:absolute; top:22px; left:20px; display:grid; grid-auto-flow:column; grid-template-rows:repeat(4,150px); gap:6px 14px;}
   .dicon{
-    width:84px; height:88px; display:flex; flex-direction:column; align-items:center; gap:6px;
-    padding:6px; border-radius:8px; color:#fff;
+    width:130px; height:144px; display:flex; flex-direction:column; align-items:center; gap:8px;
+    padding:8px; border-radius:10px; color:#fff;
   }
   .dicon:hover, .dicon:focus-visible{background:rgba(255,255,255,.14);}
-  .dicon svg{width:42px; height:42px;}
-  .dicon span{font-size:11.5px; text-align:center; text-shadow:0 1px 3px rgba(0,0,0,.6); line-height:1.25;}
+  .dicon svg{width:68px; height:68px;}
+  .dicon span{font-size:13.5px; text-align:center; text-shadow:0 1px 3px rgba(0,0,0,.6); line-height:1.25; max-width:126px;}
 
   /* ===== DOCK ===== */
   .dock-wrap{position:fixed; left:0; right:0; bottom:10px; z-index:700; display:flex; justify-content:center; pointer-events:none;}
@@ -171,7 +171,10 @@
   :focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
 
   @media (max-width:720px){
-    .icons{grid-template-rows:repeat(6,84px); left:10px;}
+    .icons{grid-template-rows:repeat(6,118px); left:10px; gap:4px 8px;}
+    .dicon{width:100px; height:112px;}
+    .dicon svg{width:52px; height:52px;}
+    .dicon span{font-size:12px; max-width:96px;}
     .win{left:3% !important; top:6% !important; width:94% !important; height:82% !important;}
     .mb-links{display:none;}
     .pgrid{grid-template-columns:1fr;}
@@ -259,7 +262,7 @@
 (function(){
   var WINDOWS = {
     about: {
-      title: "About Me", icon: "i-person", x: 110, y: 30, w: 460, h: 380,
+      title: "About Me", icon: "i-person", x: 360, y: 50, w: 460, h: 380,
       html: '<div class="content">'
         + '<h2>Sanskar Verma</h2>'
         + '<div class="role">Computer Science (AI) &middot; PSIT Kanpur, 2021&ndash;2025</div>'
@@ -276,15 +279,16 @@
         + '</div>'
     },
     projects: {
-      title: "Projects", icon: "i-folder", x: 140, y: 60, w: 620, h: 440,
+      title: "Projects", icon: "i-folder", x: 380, y: 60, w: 620, h: 440,
       html: '<div class="pgrid">'
         + '<div class="pcard"><h3>AI Interviewer</h3><p>Reads GitHub repos to generate personalised interview questions, runs a voice interview, and scores responses with Gemini.</p><div class="stack"><span>React</span><span>Gemini</span><span>Deepgram</span></div></div>'
+        + '<div class="pcard"><h3>The Research Desk</h3><p>A four-agent LangChain pipeline (Search, Reader, Writer, Critic) that turns a topic into a structured research report. Live on Streamlit.</p><div class="stack"><span>LangChain</span><span>OpenAI</span><span>Tavily</span></div></div>'
         + '<div class="pcard"><h3>Data Warehouse &amp; Analytics Platform</h3><p>Medallion Architecture warehouse (Bronze / Silver / Gold) with ETL pipelines and a Star Schema for analytics.</p><div class="stack"><span>SQL Server</span><span>ETL</span><span>Star Schema</span></div></div>'
         + '</div>'
         + '<div class="content" style="padding-top:0;"><p class="hint">Open the individual folders on the desktop for full write-ups, or ask the chat.</p></div>'
     },
     warehouse: {
-      title: "Data Warehouse", icon: "i-folder", x: 170, y: 90, w: 480, h: 420,
+      title: "Data Warehouse", icon: "i-folder", x: 410, y: 90, w: 480, h: 420,
       html: '<div class="content">'
         + '<h2>Data Warehouse &amp; Analytics Platform</h2>'
         + '<div class="stack"><span>SQL Server</span><span>ETL Pipelines</span><span>Medallion Architecture</span><span>Star Schema</span><span>Data Modelling</span><span>Notion</span></div>'
@@ -296,7 +300,7 @@
         + '</ul></div>'
     },
     interviewer: {
-      title: "AI Interviewer", icon: "i-folder", x: 210, y: 120, w: 480, h: 420,
+      title: "AI Interviewer", icon: "i-folder", x: 450, y: 120, w: 480, h: 420,
       html: '<div class="content">'
         + '<h2>AI Interviewer</h2>'
         + '<div class="role">Personalized AI Technical Interview Platform</div>'
@@ -308,8 +312,21 @@
         + '<li>Implemented Gemini-based evaluation that scores candidate responses and generates detailed feedback, with quota and error handling.</li>'
         + '</ul></div>'
     },
+    researchdesk: {
+      title: "The Research Desk", icon: "i-folder", x: 470, y: 150, w: 500, h: 440,
+      html: '<div class="content">'
+        + '<h2>The Research Desk</h2>'
+        + '<div class="role">Multi-Agent AI Research System &middot; Live on Streamlit</div>'
+        + '<div class="stack"><span>LangChain</span><span>OpenAI</span><span>Tavily Search</span><span>Streamlit</span><span>Python</span></div>'
+        + '<ul>'
+        + '<li>Built a four-agent LangChain pipeline that turns a topic into a structured research report: a Search Agent finds recent sources, a Reader Agent extracts relevant information, a Writer Agent drafts the report, and a Critic Agent reviews it for gaps.</li>'
+        + '<li>Uses the Tavily search API to pull current web sources, with the pipeline running each agent sequentially so each stage builds on the last.</li>'
+        + '<li>Outputs a structured report with an introduction, key findings, conclusion, and cited sources, shown with live progress as the agents work.</li>'
+        + '<li>Deployed live with Streamlit — try it at <a href="https://research-desk-ai.streamlit.app/" target="_blank" rel="noopener">research-desk-ai.streamlit.app</a>.</li>'
+        + '</ul></div>'
+    },
     publication: {
-      title: "Publication.pdf", icon: "i-pdf", x: 120, y: 40, w: 680, h: 580,
+      title: "Publication.pdf", icon: "i-pdf", x: 360, y: 40, w: 680, h: 580,
       html: '<div class="content">'
         + '<h2>IoT-Integrated Cloud and Data Solutions</h2>'
         + '<div class="role">CRC Press &middot; Taylor &amp; Francis &mdash; Book Chapter</div>'
@@ -320,7 +337,7 @@
         + '</div>'
     },
     skills: {
-      title: "Skills", icon: "i-gear", x: 190, y: 80, w: 480, h: 420,
+      title: "Skills", icon: "i-gear", x: 430, y: 80, w: 480, h: 420,
       html: '<div class="content">'
         + '<h2>Technical Skills</h2>'
         + '<table class="inv"><tr><th>Category</th><th>Contents</th></tr>'
@@ -333,7 +350,7 @@
         + '</table></div>'
     },
     credentials: {
-      title: "Credentials", icon: "i-medal", x: 230, y: 100, w: 480, h: 420,
+      title: "Credentials", icon: "i-medal", x: 480, y: 100, w: 480, h: 420,
       html: '<div class="content">'
         + '<h2>Leadership &amp; Certifications</h2>'
         + '<div class="role">Vice President &mdash; Aryabhatta Club, PSIT Kanpur (2021&ndash;2025)</div>'
@@ -346,7 +363,7 @@
         + '</table></div>'
     },
     contact: {
-      title: "Contact", icon: "i-mail", x: 260, y: 130, w: 420, h: 300,
+      title: "Contact", icon: "i-mail", x: 500, y: 130, w: 420, h: 300,
       html: '<div class="content">'
         + '<h2>Get in touch</h2>'
         + '<div class="kv">'
@@ -359,7 +376,7 @@
         + '</div>'
     },
     chat: {
-      title: "Ask Me", icon: "i-spark", x: 200, y: 40, w: 380, h: 460, isChat: true,
+      title: "Ask Me", icon: "i-spark", x: 440, y: 40, w: 380, h: 460, isChat: true,
       html: '<div class="chat-body">'
         + '<div class="chat-scroll" id="chat-scroll"><div class="chat-log" id="chat-log"></div></div>'
         + '<div class="chat-input-row"><input id="chat-input" type="text" placeholder="Ask about Sanskar\'s resume..." autocomplete="off">'
@@ -379,6 +396,7 @@
     { k:["backend","spring boot","rest api","fastapi","mysql","api"], a:"Backend & APIs: Spring Boot, REST APIs, FastAPI (basics), MySQL." },
     { k:["docker","git","github","postman","vscode","devops","tools"], a:"Tools & DevOps: Docker, Git, GitHub, Postman, VS Code." },
     { k:["ai interviewer","interview platform","gemini","deepgram","mock interview","technical interview","voice interview"], a:"AI Interviewer is a personalized technical interview platform: it reads a candidate's GitHub repos to generate project-specific questions with Gemini, runs a real-time voice interview via Deepgram, and scores responses with detailed feedback. Built with React, Bun, PostgreSQL, Prisma, Gemini API, Deepgram, and the GitHub API." },
+    { k:["research desk","multi-agent","multi agent","langchain","tavily","research system","research agent","research report"], a:"The Research Desk is a multi-agent AI research system built with LangChain: a Search Agent finds sources, a Reader Agent extracts key information, a Writer Agent drafts a structured report, and a Critic Agent reviews it for gaps. It uses OpenAI and the Tavily search API, and it's live at research-desk-ai.streamlit.app." },
     { k:["data warehouse project","warehouse project","etl pipeline","medallion architecture","star schema project"], a:"The Data Warehouse & Analytics Platform uses Medallion Architecture (Bronze/Silver/Gold layers), ETL pipelines merging two source systems, and a Gold-layer Star Schema for reporting on customer behaviour, product performance, and sales trends — built with SQL Server and documented in Notion." },
     { k:["projects","what has he built","what did he build","portfolio projects","built"], a:"Two anchor projects: a Data Warehouse & Analytics Platform (SQL Server, ETL, Medallion Architecture) and AI Interviewer (a personalized AI technical interview platform using Gemini and Deepgram)." },
     { k:["publication","book chapter","crc press","research paper","research","paper","doi","author","published","journal"], a:"He's first author of a peer-reviewed book chapter, 'IoT-Integrated Cloud and Data Solutions,' published by CRC Press (Taylor & Francis), DOI 10.1201/9781003392224, with an 89% originality score across four international editors. Co-authored with researchers from PSIT Kanpur and Amity University Lucknow." },
@@ -406,8 +424,8 @@
 
   var zTop = 10;
   var iconGrid = document.getElementById('icon-grid');
-  var deskIconOrder = ['interviewer','warehouse','publication','credentials'];
-  var deskLabels = { warehouse:'Data Warehouse', interviewer:'AI Interviewer', publication:'Publication.pdf', credentials:'Credentials' };
+  var deskIconOrder = ['interviewer','researchdesk','warehouse','publication','credentials'];
+  var deskLabels = { warehouse:'Data Warehouse', interviewer:'AI Interviewer', researchdesk:'Research Desk', publication:'Publication.pdf', credentials:'Credentials' };
   deskIconOrder.forEach(function(id){
     var m = WINDOWS[id];
     var btn = document.createElement('button');
